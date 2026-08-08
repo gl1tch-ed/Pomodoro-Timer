@@ -107,8 +107,8 @@ Bloom is a static build — deploy `dist/` to any static host. Config for **Verc
 Remember to set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in your host's environment
 variables, and point your Supabase Auth **Site URL / Redirect URLs** at the deployed domain.
 
-See **[DEPLOY.md](DEPLOY.md)** for the full step-by-step (Supabase setup, env vars, both hosts, and a
-post-deploy smoke test).
+Both host configs also ship security headers (a Content-Security-Policy, `X-Frame-Options`,
+`X-Content-Type-Options: nosniff`, and a strict `Referrer-Policy`).
 
 ---
 

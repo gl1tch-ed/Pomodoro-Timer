@@ -6,24 +6,11 @@
     <meta name="theme-color" content="#eef1e3" />
     <meta
       name="description"
-      content="A calming Pomodoro focus timer with custom intervals, task tracking, statistics, and relaxing ambient sounds."
+      content="Bloom — a calming Pomodoro focus timer with custom intervals, task tracking, statistics, and a forest that grows across the world as you focus."
     />
     <title>Bloom — A Relaxing Pomodoro Timer</title>
-    <script>
-      // Set the theme before first paint to avoid a flash of the wrong theme.
-      (function () {
-        try {
-          var raw = localStorage.getItem('pomodoro.theme')
-          var t = raw ? JSON.parse(raw) : null
-          if (t !== 'light' && t !== 'dark') {
-            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-          }
-          document.documentElement.dataset.theme = t
-        } catch (e) {
-          document.documentElement.dataset.theme = 'light'
-        }
-      })()
-    </script>
+    <!-- Sets the theme before first paint (avoids a flash). External so the CSP can use script-src 'self'. -->
+    <script src="/theme-init.js"></script>
   </head>
   <body>
     <div id="root"></div>
