@@ -1,0 +1,206 @@
+/*
+  theme.css — Moss / forest design tokens.
+  All colors, spacing, radii, and shadows live here as CSS custom properties
+  so the whole app shares one calm, cohesive forest palette.
+*/
+
+:root {
+  /* ---- Moss palette ---- */
+  --pine: #232d1c;
+  --moss-deepest: #2f3f24;
+  --moss-deep: #3f5a2e;
+  --moss: #5c7d43;
+  --fern: #7a9a55;
+  --sage-soft: #a7bd88;
+  --bark: #866a45;
+  --bark-deep: #6a5236;
+  --dapple: #b9c96b;
+  --sage-paper: #ecefe1;
+
+  /* ---- Semantic roles ---- */
+  /* Soft moss page background — pure CSS, no external imagery. */
+  --bg-gradient:
+    radial-gradient(1200px 800px at 12% -10%, #f3f6e8 0%, rgba(243, 246, 232, 0) 55%),
+    radial-gradient(1000px 720px at 100% 0%, #e4ecd2 0%, rgba(228, 236, 210, 0) 52%),
+    linear-gradient(165deg, #eef1e3 0%, #e3e8d3 100%);
+  --surface: rgba(250, 252, 244, 0.82);
+  --surface-solid: #f8faf0;
+  --surface-2: rgba(230, 236, 217, 0.7);
+  --border: rgba(35, 45, 28, 0.13);
+  --border-strong: rgba(35, 45, 28, 0.22);
+
+  --text: #232d1c;
+  --text-soft: #566043;
+  --text-muted: #8b9572;
+
+  --primary: var(--moss);
+  --primary-soft: var(--fern);
+  --accent: var(--moss);
+  --accent-deep: var(--moss-deep);
+
+  /* Warm contrast highlight — stands out against the green UI
+     (used for the streak tile, the "today" bar, and pips). */
+  --highlight: #c2a24a;
+  --highlight-soft: var(--dapple);
+  --highlight-deep: var(--bark);
+
+  /* Phase accent colors (timer ring + tabs) — three distinct greens */
+  --focus: #5c7d43;
+  --focus-deep: #3f5a2e;
+  --short: #7a9a55;
+  --short-deep: #5f7d3f;
+  --long: #5f8f7a;
+  --long-deep: #477060;
+
+  /* ---- Backward-compatible aliases ----
+     Older component styles still reference the warm-palette names; map them
+     onto the Moss palette so everything re-skins without touching each rule.
+     --sand is the neutral "empty/track" tone; the terracotta pair becomes the
+     warm gold highlight so filled pips / the "today" bar keep their pop. */
+  --sand: #d9dfc6;
+  --sage: var(--fern);
+  --sage-deep: var(--moss);
+  --terracotta: var(--highlight);
+  --terracotta-deep: var(--highlight-deep);
+
+  /* ---- Forest scene tokens (isometric ink-illustration plot) ----
+     Parchment paper, sepia trees, dark ink linework. The scene keeps its own
+     vintage-illustration palette, distinct from the moss app chrome. */
+  --fp-paper: #ece5cd; /* scene background (aged paper) */
+  --fp-paper-edge: #e0d6b6; /* soft vignette / paper edge */
+  --fp-plot-top: #d8caa2; /* isometric ground slab, top face */
+  --fp-plot-top-2: #cebd90; /* subtle top-face banding */
+  --fp-plot-side: #b6a071; /* slab side face (in light) */
+  --fp-plot-side-dark: #9c8659; /* slab side face (in shadow) */
+  --fp-sepia-1: #cbb184; /* foliage highlight */
+  --fp-sepia-2: #b2966a; /* foliage mid */
+  --fp-sepia-3: #8f7550; /* foliage shadow / trunk */
+  --fp-ink: #2c2620; /* linework + hatching */
+  --fp-tree-shadow: rgba(70, 55, 38, 0.2); /* cast shadow on the ground */
+  --fp-grain: rgba(70, 55, 38, 0.05);
+
+  /* ---- Globe tokens — black & white ink sketch (light: black on paper) ---- */
+  --globe-ocean: #fbfaf5; /* sphere / paper (land reads via ink outline, not fill) */
+  --globe-land: #fbfaf5; /* same paper — continents defined by ink + hatch */
+  --globe-line: #1c1a15; /* near-black ink */
+  --globe-shade: 0.16; /* strength of the sphere shading */
+  --globe-sea: #4f86b0; /* ocean tint hugging a forest's coast */
+  --globe-forest-light: #b9dc9c; /* forested land — sparse (light green) */
+  --globe-forest-deep: #3c7a3c; /* forested land — full (deep forest green) */
+
+  /* ---- Radii ---- */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  /* ---- Shadows (soft, diffuse, green-tinted) ---- */
+  --shadow-sm: 0 2px 10px rgba(35, 45, 28, 0.08);
+  --shadow-md: 0 10px 30px rgba(35, 45, 28, 0.12);
+  --shadow-lg: 0 24px 60px rgba(35, 45, 28, 0.16);
+  --shadow-inset: inset 0 1px 2px rgba(255, 255, 255, 0.55);
+
+  /* ---- Spacing scale ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+
+  /* ---- Typography ---- */
+  --font-body: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 0.35s;
+}
+
+/*
+  Dark theme — forest floor at dusk.
+  The document root carries data-theme="dark" (set by an inline script in
+  index.html before paint, then kept in sync by React). Only the colour tokens
+  change; every component re-skins through them. Accent greens stay dark enough
+  to keep white button text legible; the few spots that use a "deep" token as
+  TEXT are re-pointed to a lighter green/gold below.
+*/
+:root[data-theme='dark'] {
+  /* accent green (Charcoal dark theme) */
+  --moss: #76b45e;
+  --moss-deep: #5c9346;
+  --fern: #8cc06f;
+  --sage-soft: #a6c78d;
+  --bark: #a1855c;
+  --dapple: #c7d78a;
+
+  /* semantic neutrals — Charcoal graphite, with a soft CSS gradient (no imagery) */
+  --bg-gradient:
+    radial-gradient(1200px 800px at 12% -10%, #1b2028 0%, rgba(27, 32, 40, 0) 55%),
+    radial-gradient(1000px 720px at 100% 0%, #191c22 0%, rgba(25, 28, 34, 0) 52%),
+    linear-gradient(165deg, #14161a 0%, #101215 100%);
+  --surface: rgba(30, 33, 39, 0.86);
+  --surface-solid: #1e2127;
+  --surface-2: rgba(38, 42, 49, 0.7);
+  --border: rgba(233, 234, 237, 0.12);
+  --border-strong: rgba(233, 234, 237, 0.2);
+
+  --text: #e9eaed;
+  --text-soft: #b6bcc6;
+  --text-muted: #98a0ab;
+
+  --highlight: #cdb05a;
+
+  /* phase colours — a touch brighter so the ring reads on dark */
+  --focus: #7aa354;
+  --focus-deep: #5c8038;
+  --short: #93b56a;
+  --short-deep: #6f9748;
+  --long: #77b6a0;
+  --long-deep: #4f957e;
+
+  /* neutral track/empty tone */
+  --sand: #2b2f36;
+
+  /* forest scene — aged parchment (dim, lantern-lit) */
+  --fp-paper: #221e18;
+  --fp-paper-edge: #191510;
+  --fp-plot-top: #3a3324;
+  --fp-plot-top-2: #453c2a;
+  --fp-plot-side: #2a2418;
+  --fp-plot-side-dark: #201b12;
+  --fp-sepia-1: #9a835b;
+  --fp-sepia-2: #7d6845;
+  --fp-sepia-3: #5e4d33;
+  --fp-ink: #17130d;
+  --fp-tree-shadow: rgba(0, 0, 0, 0.42);
+  --fp-grain: rgba(0, 0, 0, 0.16);
+
+  /* Globe — inverted B&W: white chalk ink on a charcoal sphere */
+  --globe-ocean: #191c22;
+  --globe-land: #191c22;
+  --globe-line: #e6e8ec;
+  --globe-shade: 0.22;
+  --globe-sea: #5f97c4;
+  --globe-forest-light: #46643b; /* muted green on the dark sphere */
+  --globe-forest-deep: #6fae5a; /* forest green when full (Charcoal) */
+
+  /* shadows — deeper, no bright inset line */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.46);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.5);
+  --shadow-inset: inset 0 1px 2px rgba(255, 255, 255, 0.05);
+}
+
+/* Spots that use a "deep" accent as text need a lighter tone on dark. */
+:root[data-theme='dark'] .stat--accent .stat-value {
+  color: var(--highlight);
+}
+:root[data-theme='dark'] .chart-label.is-today {
+  color: var(--fern);
+}
+:root[data-theme='dark'] .grow-bonus {
+  color: var(--fern);
+}

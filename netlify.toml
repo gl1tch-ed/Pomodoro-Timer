@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback: serve index.html for any path (existing files are served first).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in the Netlify UI:
+# Site settings → Environment variables. (Do not commit real keys.)

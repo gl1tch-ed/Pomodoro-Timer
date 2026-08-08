@@ -1,0 +1,85 @@
+/*
+  background.css — frosted-glass UI panels.
+  The page background is a pure-CSS gradient (see --bg-gradient in theme.css); the
+  panels below sit on it as translucent, blurred "glass". No external imagery.
+*/
+
+/* ---------- Frosted-glass panels (light mode) ---------- */
+:root[data-theme='light'] .card,
+:root[data-theme='light'] .grow-meter,
+:root[data-theme='light'] .pick-banner,
+:root[data-theme='light'] .plot-placeholder {
+  background: rgba(255, 255, 255, 0.56);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 16px 44px rgba(14, 18, 24, 0.12);
+}
+:root[data-theme='light'] .modal {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+}
+
+/* smaller chips / tracks read on the frosted panels */
+:root[data-theme='light'] .fbadge,
+:root[data-theme='light'] .view-switch {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+:root[data-theme='light'] .header-actions .btn-icon {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ---------- Dark mode: same treatment, charcoal frosted panels ---------- */
+:root[data-theme='dark'] .card,
+:root[data-theme='dark'] .grow-meter,
+:root[data-theme='dark'] .pick-banner,
+:root[data-theme='dark'] .plot-placeholder {
+  background: rgba(22, 25, 31, 0.56);
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.45);
+}
+:root[data-theme='dark'] .modal {
+  background: rgba(22, 25, 31, 0.9);
+  backdrop-filter: blur(24px) saturate(1.1);
+  -webkit-backdrop-filter: blur(24px) saturate(1.1);
+}
+:root[data-theme='dark'] .fbadge,
+:root[data-theme='dark'] .view-switch {
+  background: rgba(30, 34, 41, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+:root[data-theme='dark'] .header-actions .btn-icon {
+  background: rgba(30, 34, 41, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Reduced transparency preference: fall back to solid panels. */
+@media (prefers-reduced-transparency: reduce) {
+  :root[data-theme='light'] .card,
+  :root[data-theme='light'] .grow-meter,
+  :root[data-theme='light'] .pick-banner {
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  :root[data-theme='dark'] .card,
+  :root[data-theme='dark'] .grow-meter,
+  :root[data-theme='dark'] .pick-banner {
+    background: rgba(22, 25, 31, 0.94);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

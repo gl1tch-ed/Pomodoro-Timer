@@ -1,0 +1,158 @@
+/*
+  auth.css — the signed-out login / sign-up screen and the loading splash.
+  Reuses the app's tokens (theme.css) and shared .card / .input / .btn styles.
+*/
+
+.auth-screen {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--sp-5);
+}
+/* Background is the page gradient (theme.css --bg-gradient) showing through. */
+
+/* ---------- Card ---------- */
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.auth-brand {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+.auth-mark {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  background: linear-gradient(150deg, var(--sage) 0%, var(--terracotta) 130%);
+  box-shadow: var(--shadow-sm);
+  font-size: 28px;
+  margin-bottom: var(--sp-2);
+}
+
+.auth-title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  line-height: 1.1;
+}
+
+.auth-sub {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Segmented sign in / create account switch ---------- */
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.auth-tab {
+  padding: 9px 12px;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.auth-tab.is-active {
+  background: linear-gradient(160deg, var(--accent) 0%, var(--accent-deep) 100%);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Form ---------- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: var(--sp-1);
+}
+
+.auth-forgot {
+  align-self: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.auth-forgot:hover:not(:disabled) {
+  color: var(--text-soft);
+}
+.auth-forgot:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Messages ---------- */
+.auth-msg {
+  font-size: 0.88rem;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+}
+.auth-msg--error {
+  color: #8f2f22;
+  background: rgba(192, 83, 63, 0.12);
+  border-color: rgba(192, 83, 63, 0.3);
+}
+.auth-msg--info {
+  color: var(--moss-deep);
+  background: rgba(92, 125, 67, 0.12);
+  border-color: rgba(92, 125, 67, 0.3);
+}
+:root[data-theme='dark'] .auth-msg--error {
+  color: #f0a99b;
+}
+:root[data-theme='dark'] .auth-msg--info {
+  color: var(--fern);
+}
+
+/* ---------- Footer link ---------- */
+.auth-foot {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+.auth-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.auth-link:hover {
+  color: var(--accent-deep);
+}
+
+/* ---------- Loading splash ---------- */
+.auth-splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-3);
+  color: var(--text);
+}
+.auth-splash .muted {
+  color: var(--text-muted);
+}

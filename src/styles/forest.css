@@ -1,0 +1,231 @@
+/*
+  forest.css — the Forest view: summary, "today's growth" meter, and the
+  painterly scene. Scene colours come from theme tokens via these utility
+  classes so fill/stop-color resolve var() (SVG presentation attributes don't).
+*/
+
+.forest {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+/* ---------- Header ---------- */
+.forest-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+.forest-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.forest-sub {
+  margin: 4px 0 0;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+}
+.forest-badges {
+  display: flex;
+  gap: var(--sp-2);
+}
+.fbadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: 7px 14px;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  box-shadow: var(--shadow-sm);
+}
+.fbadge-n {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.fbadge-streak {
+  background: linear-gradient(160deg, rgba(194, 162, 74, 0.2), rgba(194, 162, 74, 0.08));
+  border-color: rgba(194, 162, 74, 0.34);
+}
+
+/* ---------- Today's growth meter ---------- */
+.grow-meter {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md), var(--shadow-inset);
+  padding: var(--sp-5);
+}
+.grow-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.grow-label {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+.grow-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--text);
+}
+.grow-bonus {
+  color: var(--moss-deep);
+  font-weight: 700;
+}
+.grow-track {
+  height: 12px;
+  border-radius: var(--r-pill);
+  background: var(--sand);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(35, 45, 28, 0.12);
+}
+.grow-fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--fern) 0%, var(--moss) 60%, var(--moss-deep) 100%);
+  transition: width 0.5s var(--ease);
+  min-width: 3px;
+}
+.grow-hint {
+  margin: var(--sp-3) 0 0;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+/* ---------- Scene frame (isometric ink plot) ----------
+   Frameless: the plot floats directly on the page background (just its own
+   drop shadow), no card / parchment panel. */
+.scene-frame {
+  position: relative;
+  aspect-ratio: 960 / 560;
+  width: 100%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.scene-wrap {
+  position: absolute;
+  inset: 0;
+}
+.scene-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Per-forest colour ----------
+   Every scene fill derives from a single hue (--lvl) via color-mix, so each
+   forest/level is a one-line hue. Ink + tree-shadow stay dark for contrast. */
+.scene-wrap {
+  --lvl: #b2966a; /* default = level 1 sepia */
+  --fp-sepia-2: var(--lvl);
+  --fp-sepia-1: color-mix(in oklab, var(--lvl) 76%, #ffffff);
+  --fp-sepia-3: color-mix(in oklab, var(--lvl) 72%, #1c140c);
+  --fp-plot-top: color-mix(in oklab, var(--lvl) 42%, #efe7cf);
+  --fp-plot-top-2: color-mix(in oklab, var(--lvl) 52%, #e4d9bd);
+  --fp-plot-side: color-mix(in oklab, var(--lvl) 58%, #b09a6c);
+  --fp-plot-side-dark: color-mix(in oklab, var(--lvl) 52%, #93805a);
+}
+:root[data-theme='dark'] .scene-wrap {
+  --fp-sepia-2: color-mix(in oklab, var(--lvl) 74%, #14100a);
+  --fp-sepia-1: color-mix(in oklab, var(--lvl) 66%, #2a2216);
+  --fp-sepia-3: color-mix(in oklab, var(--lvl) 62%, #0d0a06);
+  --fp-plot-top: color-mix(in oklab, var(--lvl) 34%, #2c2618);
+  --fp-plot-top-2: color-mix(in oklab, var(--lvl) 42%, #35301f);
+  --fp-plot-side: color-mix(in oklab, var(--lvl) 32%, #211c11);
+  --fp-plot-side-dark: color-mix(in oklab, var(--lvl) 28%, #171308);
+}
+.lvl-0 { --lvl: #b2966a; } /* sepia */
+.lvl-1 { --lvl: #7f9a6a; } /* sage */
+.lvl-2 { --lvl: #6f8aa1; } /* dusty blue */
+.lvl-3 { --lvl: #b07f6a; } /* clay rose */
+.lvl-4 { --lvl: #8a6f9a; } /* plum */
+.lvl-5 { --lvl: #5f9a92; } /* teal */
+
+/* Scene colour mapping — resolves var() that SVG attributes can't. */
+.fp-paper-fill { fill: var(--fp-paper); }
+.fp-plot-top { fill: var(--fp-plot-top); }
+.fp-plot-top-2 { fill: var(--fp-plot-top-2); }
+.fp-plot-side { fill: var(--fp-plot-side); }
+.fp-plot-side-d { fill: var(--fp-plot-side-dark); }
+.fp-sepia-1 { fill: var(--fp-sepia-1); }
+.fp-sepia-2 { fill: var(--fp-sepia-2); }
+.fp-sepia-3 { fill: var(--fp-sepia-3); }
+.fp-ink { fill: var(--fp-ink); }
+.fp-ink-s { stroke: var(--fp-ink); }
+.fp-shadow { fill: var(--fp-tree-shadow); }
+.fp-slab-shadow { fill: var(--fp-tree-shadow); }
+.fp-vig-0 { stop-color: var(--fp-paper); stop-opacity: 0; }
+.fp-vig-1 { stop-color: var(--fp-paper-edge); stop-opacity: 0.9; }
+.fp-grain-rect {
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+:root[data-theme='dark'] .fp-grain-rect {
+  opacity: 0.16;
+}
+
+/* gentle sway of foliage */
+.fp-sway {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: fp-sway 6s ease-in-out infinite alternate;
+}
+@keyframes fp-sway {
+  from { transform: rotate(-1.1deg); }
+  to { transform: rotate(1.1deg); }
+}
+
+/* ---------- Empty state ---------- */
+.scene-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  padding: var(--sp-6) var(--sp-5);
+}
+.scene-empty-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text);
+  margin: 0 0 6px;
+  text-shadow: 0 1px 10px var(--fp-paper), 0 0 3px var(--fp-paper);
+}
+.scene-empty-sub {
+  margin: 0;
+  max-width: 40ch;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  text-shadow: 0 1px 8px var(--fp-paper), 0 0 3px var(--fp-paper);
+}
+
+.forest-foot {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0;
+}
+.forest-foot b { color: var(--text-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fp-sway { animation: none; }
+}
