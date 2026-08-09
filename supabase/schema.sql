@@ -38,6 +38,12 @@ create policy "user_state_update_own"
   using (auth.uid() = id)
   with check (auth.uid() = id);
 
+-- Expose the table to logged-in users via the Data API (RLS still filters rows).
+-- Only 'authenticated' — anonymous visitors never touch user data; no DELETE (the
+-- app never deletes rows). This makes the schema work even with the project's
+-- "Automatically expose new tables" setting turned off (the recommended default).
+grant select, insert, update on table public.user_state to authenticated;
+
 -- Enable Realtime so a user's other devices receive live updates.
 -- (RLS still applies — each client only receives its own row's changes.)
 do $$
